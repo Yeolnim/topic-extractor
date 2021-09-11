@@ -1,2 +1,2 @@
-# PatentTopicExtraction
-Patent topic extraction based on Latent Dirichlet Allocation (LDA)
+# Topic Extractor  
+Patent topic extractor based on Latent Dirichlet Allocation (LDA)

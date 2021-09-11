@@ -1,3 +1,5 @@
+import math
+import matplotlib.pyplot as plt
 from gensim import corpora, models
 
 
@@ -12,7 +14,7 @@ def ldamodel(num_topics):
     dictionary = corpora.Dictionary(train)
     corpus = [dictionary.doc2bow(text) for text in
               train]  # corpus里面的存储格式（0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1)
-    corpora.MmCorpus.serialize('corpus.mm', corpus)
+    corpora.MmCorpus.serialize('data/corpus.mm', corpus)
     lda = models.LdaModel(corpus=corpus, id2word=dictionary, random_state=1,
                           num_topics=num_topics)  # random_state 等价于随机种子的random.seed()，使每次产生的主题一致
 
@@ -22,7 +24,6 @@ def ldamodel(num_topics):
     #     print(topic)
     return lda, dictionary
 
-import math
 
 def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
     print('the info of this ldamodel: \n')
@@ -61,12 +62,6 @@ def perplexity(ldamodel, testset, dictionary, size_dictionary, num_topics):
     return prep
 
 
-from gensim import corpora, models
-import matplotlib.pyplot as plt
-# import perplexity
-# import lda_catch
-
-
 def graph_draw(topic, perplexity):  # 做主题数与困惑度的折线图
     x = topic
     y = perplexity
@@ -84,7 +79,7 @@ if __name__ == '__main__':
         for num_topics in a:
 
             lda, dictionary = ldamodel(num_topics)
-            corpus = corpora.MmCorpus('corpus.mm')
+            corpus = corpora.MmCorpus('data/corpus.mm')
             testset = []
             for c in range(int(corpus.num_docs / i)):
                 testset.append(corpus[c * i])
